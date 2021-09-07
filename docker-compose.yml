@@ -1,4 +1,5 @@
 version: "3.8"
+
 services:
   dynamodb-local:
     image: "amazon/dynamodb-local:latest"
@@ -7,3 +8,43 @@ services:
       - "8000:8000"
     working_dir: /home/dynamodblocal
     command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ."
+  dynamo-ui:
+    build: .
+    image: dynamo-ui
+    container_name: dynamo-ui
+    ports:
+      - "8001:8001"
+    depends_on:
+      - dynamodb-local
+    volumes:
+      - ./:/usr/app
+      - /usr/app/node_modules
+  data-loader:
+    build: .
+    image: data-loader
+    container_name: data-loader
+    command: "node ./loader.js"
+    depends_on:
+      - dynamodb-local
+      - dynamo-ui
+    environment:
+      AWS_ACCESS_KEY_ID: "dummy"
+      AWS_SECRET_ACCESS_KEY: "dummy"
+    volumes:
+      - ./:/usr/app
+      - /usr/app/node_modules
+  dynamo-query:
+    build: .
+    image: dynamo-query
+    container_name: dynamo-query
+    command: "node ./query.js"
+    depends_on:
+      - dynamodb-local
+      - data-loader
+      - dynamo-ui
+    environment:
+      AWS_ACCESS_KEY_ID: "dummy"
+      AWS_SECRET_ACCESS_KEY: "dummy"
+    volumes:
+      - ./:/usr/app
+      - /usr/app/node_modules

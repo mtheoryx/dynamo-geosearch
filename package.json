@@ -1,0 +1,27 @@
+{
+  "name": "dynamo-geosearch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "aws-sdk": "^2.983.0",
+    "dynamodb-admin": "^4.0.3",
+    "dynamodb-geo": "^0.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:ui": "DYNAMO_ENDPOINT=http://dynamodb-local:8000 dynamodb-admin"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mtheoryx/dynamo-geosearch.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mtheoryx/dynamo-geosearch/issues"
+  },
+  "homepage": "https://github.com/mtheoryx/dynamo-geosearch#readme"
+}
